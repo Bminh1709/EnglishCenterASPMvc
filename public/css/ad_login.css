@@ -1,0 +1,23 @@
+.thisIsLoginAdmin .login-box {
+    width: 400px;
+    text-align: center;
+    margin: auto;
+}
+.login-page {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+.loginad-img {
+    height: 150px;
+}
+.login-box-msg {
+    text-align: center;
+    color: #fff;
+}
+.icheck-primary {
+    float: left;
+}
+.thisIsLoginAdmin .card {
+    background-color: #88a6bc;
+}

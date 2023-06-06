@@ -1,0 +1,17 @@
+.courses-container {
+    width:90%; 
+    margin: 60px auto;
+    display: flex;
+    justify-content: center;
+}
+.course-container {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+}
+.courses-container-inside {
+    width: 85vw;
+    display: flex;
+    justify-content: space-around;
+}
+

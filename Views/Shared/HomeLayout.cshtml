@@ -1,0 +1,285 @@
+﻿@using EnglishCenter.Models
+@{ 
+    if (Session["user"] != null)
+    {
+        MinhcenterEntities db = new MinhcenterEntities();
+        ViewData["listCart"] = db.ShowCart((int?)Session["us_id"]).ToList();
+    }
+}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>@ViewBag.Title</title>
+
+<!-- Google Font: Source Sans Pro -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="/template/admin/plugins/fontawesome-free/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.css">
+<!-- icheck bootstrap -->
+<link rel="stylesheet" href="/template/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="/template/admin/dist/css/adminlte.min.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+<!-- css files -->
+<link rel="stylesheet" type="text/css" href="~/public/css/ad_login.css">
+<link rel="stylesheet" type="text/css" href="~/public/css/publicCSS.css">
+<link rel="stylesheet" type="text/css" href="~/public/css/navigationbar.css">
+<link rel="stylesheet" type="text/css" href="~/public/css/home.css">
+<link rel="stylesheet" type="text/css" href="~/public/css/profile.css">
+<link rel="stylesheet" type="text/css" href="~/public/css/courses.css">
+<link rel="stylesheet" type="text/css" href="~/public/css/popUp.css">
+<link href="~/public/css/Pagination.css" rel="stylesheet" />
+
+@* NAVIGATION BAR *@
+<header>
+    <!-- Navbar -->
+    <nav style="backdrop-filter: blur(10px);" class="navbar navbar-expand-lg navbar-light fixed-top mask-custom shadow-0">
+        <div class="container">
+            <a class="navbar-brand" href="~/Home"><span style="color: #5e9693;">MB</span><span style="color: #fff;">Center</span></a>
+            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                    data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#introduction">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/courses">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#staffs">Staffs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav d-flex flex-row">
+                    <!-- STATE OF USER LOGIN SUCCESS -->
+                    @{
+                        if (Session["user"] == null)
+                        {
+                            <li class="nav-item me-3 me-lg-0">
+                                <a class="nav-link" href="~/Home/Login">Login</a>
+                            </li>
+                            <li class="nav-item me-3 me-lg-0">
+                                <a class="nav-link" href="~/Home/Signup">Register</a>
+                            </li>
+                        }
+                        else
+                        {
+                                <!-- CART -->
+                                <li class="nav-item me-3 me-lg-0">
+                                    <a class="nav-link" href="#">
+                                        <div class="popup" onclick="myFunction()">
+                                            <i style="margin-top:6px;" class="fas fa-shopping-cart"></i>
+                                            <div class="popuptext" id="myPopup">
+
+                                                <div class="card">
+                                                    <div class="card-body p-0">
+                                                        <table class="table table-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Image</th>
+                                                                    <th>Name</th>
+                                                                    <th style="width: 40px">Price</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @{ if (ViewData["listCart"] != null)
+                                                                    {
+                                                                        foreach (var item in ViewData["listCart"] as IEnumerable
+                                                                            <EnglishCenter.Models.ShowCart_Result>)
+                                                                        {
+                                                                            <tr>
+                                                                                <td><img src="@item.co_img" style="width:70px;"></td>
+                                                                                <td>@item.co_name</td>
+                                                                                <td>@item.co_price</td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <button type="button" onclick="location.href='/User/Home/Invoice'" class="btn" style="background-color:#649996; font-weight:400; color:#fff;">View Order</button>
+                                                    <!-- /.card-body -->
+                                                </div>
+                                                <!-- /.card -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                            <li class="nav-item me-3 me-lg-0">
+                                <a class="nav-link" href="~/User/Home">Welcome back "@Session["us_firstname"]"</a>
+                            </li>
+                            <li class="nav-item me-3 me-lg-0">
+                                <a style="margin-top: 5px;" class="nav-link" href="~/Home/Logout">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </a>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar -->
+</header>
+
+@RenderSection("SearchBar", false)
+
+
+@RenderBody()
+
+
+
+
+<!-- Remove the container if you want to extend the Footer to full width. -->
+<div id="contact">
+    <!-- Footer -->
+    <footer class="text-center text-lg-start text-dark"
+            style="background-color: #ECEFF1">
+        <!-- Section: Social media -->
+        <section class="d-flex justify-content-between p-4 text-white"
+                 style="background-color: #67c3ff">
+            <!-- Left -->
+            <div class="me-5">
+                <span>Get connected with us on social networks:</span>
+            </div>
+            <!-- Left -->
+            <!-- Right -->
+            <div>
+                <a href="https://www.facebook.com/bmint1709/" target="_blank" class="text-white me-4">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/minh-bui-166979272/" target="_blank" class="text-white me-4">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/bmint_1709/" target="_blank" class="text-white me-4">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/Bminh1709" target="_blank" class="text-white me-4">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold">BM CENTER</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p>
+                            Here you can had a chance to learn English and meet many teachers. Therefore, you also can make new friends.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Useful links</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p>
+                            <a href="/home/main" class="text-dark">Home</a>
+                        </p>
+                        <p>
+                            <a href="/user/signup" target="_blank" class="text-dark">Sign Up</a>
+                        </p>
+                        <p>
+                            <a href="/user/login" target="_blank" class="text-dark">Log In</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-dark">Profile</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Courses</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p>
+                            <a href="/courses/current" class="text-dark">Toeic 450+</a>
+                        </p>
+                        <p>
+                            <a href="/courses/current" class="text-dark">Ielts 7+</a>
+                        </p>
+                        <p>
+                            <a href="/courses/current" class="text-dark">Foundation English</a>
+                        </p>
+                        <p>
+                            <a href="/courses/current" class="text-dark">Communication English</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Contact</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p><i class="fas fa-home mr-3"></i> 78 Le Tan Trung</p>
+                        <p><i class="fas fa-envelope mr-3"></i> minhbee203@gmail.com</p>
+                        <p><i class="fas fa-phone mr-3"></i> + 8470 616 2561</p>
+                        <p><i class="fas fa-print mr-3"></i> + 8470 616 2561</p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+        <!-- Copyright -->
+        <div class="text-center p-2"
+             style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2020 Copyright:
+            <a class="text-dark" href="#">http://EnglishCenter.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+</div>
+<!-- End of .container -->
+<!-- jQuery -->
+<script src="/template/admin/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="/template/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/template/admin/dist/js/adminlte.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+<script src="~/public/js/checkAdminLogin.js"></script>
+<script src="~/public/js/deleteConfirm.js"></script>
+<script src="~/public/js/checkAddCourse.js"></script>
+<script src="~/public/js/checkUserSignup.js"></script>
+<script src="~/public/js/checkCart.js"></script>
+<script src="~/public/js/paymentConfirm.js"></script>
+

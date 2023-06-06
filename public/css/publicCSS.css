@@ -1,0 +1,24 @@
+.btn__green {
+    background-color: #698496;
+}
+.profile-user-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 5px;
+    object-fit:cover;
+    border: 3px solid #adb5bd;
+    padding: 3px;
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.img-circle {
+    border-radius: 50%;
+}
+.container-text-courses {
+    backdrop-filter: blur(10px); 
+    padding:10px;
+    background-color: rgba(255, 255, 255, .15);
+}

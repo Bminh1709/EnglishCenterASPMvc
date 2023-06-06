@@ -1,0 +1,114 @@
+﻿@model IEnumerable<EnglishCenter.Models.getCoursesJoined_Result>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+<div class="profile-container">
+
+
+    <!-- Profile Image -->
+    <div style="width:300px;">
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle"
+                         src="@Session["us_img"]"
+                         alt="User profile picture">
+                </div>
+                <h3 class="profile-username text-center"></h3>
+
+                <p class="text-muted text-center"></p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                        <b>Name</b><a class="float-right">@Session["us_lastname"] @Session["us_firstname"]</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Gmail</b><a class="float-right">@Session["user"]</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Phone</b><a class="float-right">@Session["us_phone"]</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Gender</b><a class="float-right">@Session["us_gender"]</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-primary btn-block btn__green"><b>Edit Info</b></a>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+
+
+
+    <!-- TABLES -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Joined Courses</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0" style="height: 500px; width: 1000px;">
+                    <table class="table table-head-fixed text-wrap">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Teacher</th>
+                                <th style="width:100px;">Join Day</th>
+                                <th style="width:200px;">Description</th>
+                                <th>Price</th>
+                                <th>Image</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.co_Id</td>
+                                        <td>@item.co_name</td>
+                                        <td>@item.co_teacher</td>
+                                        <td>@string.Format("{0:dd/MM/yyyy}", item.or_dayjoin)</td>
+                                        <td>@item.co_des</td>
+                                        <td>@item.co_price</td>
+                                        <td>
+                                            <img class="img_course" style="height:150px; width:200px;object-fit:cover;"
+                                                 src="@item.co_img">
+                                        </td>
+                                        <td>
+                                            @{
+                                                if (item.or_state == "0")
+                                                {
+                                                    <i style="color:red; margin-left:10px;" class="fas fa-times-circle"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i style="color:green; margin-left:10px;" class="fas fa-check-circle"></i>
+                                                }
+                                            }
+</tr>
+                                }
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+
+
+
+</div>
+</div>
+

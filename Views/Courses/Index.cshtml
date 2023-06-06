@@ -1,0 +1,121 @@
+﻿@*@model IEnumerable<EnglishCenter.Models.searchCourse_Result>*@
+@*@model IEnumerable<EnglishCenter.Models.course>*@
+
+@using EnglishCenter.Models;
+@using PagedList.Mvc;
+@using PagedList;
+
+@model PagedList.IPagedList<EnglishCenter.Models.course>
+
+@{
+    ViewBag.Title = "Courses";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+    bool empty = true;
+}
+@Html.Raw(TempData["CourseInCart"])
+
+@section SearchBar{
+    <div class="container section-title-container">
+        <h2 class="section-title section-title-center">
+            <span class="section-title-main" style="font-size:130%;color:rgb(0, 0, 0); margin-top:30px;">CURRENT COURSES IN OUR CENTER</span>
+            <div id="courses"></div>
+        </h2>
+    </div>
+    <div>
+        <p class="title" style="text-align: center;margin-bottom: 40px;"><span style="font-size: 95%;">THE BEST PLACE TO FULFIL YOUR POTENTIAL </span></p>
+    </div>
+
+
+    <!-- Search bar -->
+    <section class="content">
+        <div class="container-fluid">
+            <h4 class="text-center">Search your course</h4>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <form method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-lg" value="@ViewBag.filter" name="filter" placeholder="Type your keywords here">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-lg btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+}
+
+<!-- BODY - COURSES -->
+<section class="courses-container">
+
+    <div class="row courses-container-inside" style="justify-content: center;">
+
+        @{
+            foreach (var item in Model)
+            {
+                empty = false;
+                <div class="course-container">
+                    <div class="card mb-2 bg-gradient-dark">
+                        <img class="card-img-top" src="@item.co_img" alt="Dist Photo 1" style="width:375px; height:375px; object-fit:cover;">
+                        <div class="card-img-overlay d-flex flex-column justify-content-end">
+                            <div class="container-text-courses shadow-lg">
+                                <h5 class="card-title text-primary text-dark">@item.co_name</h5>
+                                <p class="card-text text-dark pb-2 pt-1">@item.co_des</p>
+                                <a href="~/Courses/Detail?co_id=@item.co_id" class="text-dark">More information</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        }
+
+        @{
+            if (empty == true)
+            {
+                <!-- Main content -->
+                <section class="content" style="width:500px; margin:40px auto;">
+                    <div class="error-page" style="display:flex;">
+                        <h1 class="headline"
+                            style="display:flex;
+                            color: #698496;
+                            justify-content:center;
+                            flex-direction: column;
+                            font-size:70px;
+                            margin-right:20px;">
+                            404
+                        </h1>
+
+                        <div class="error-content">
+                            <h3><i class="fas fa-exclamation-triangle" style="color: #a50606;"></i> Oops! Course not found.</h3>
+
+                            <p>
+                                We could not find the course you were looking for.
+                                Meanwhile, you may type another course and try using the correct keywords.
+                            </p>
+                        </div>
+                        <!-- /.error-content -->
+                    </div>
+                    <!-- /.error-page -->
+                </section>
+                <!-- /.content -->
+            }
+        }
+
+
+    </div>
+</section>
+
+<div style="margin:auto; width:fit-content; text-align:center;">
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index",
+        new { page }))
+</div>
+
+
+        <div style="margin-bottom:50px"></div>

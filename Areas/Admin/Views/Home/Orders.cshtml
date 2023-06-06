@@ -1,0 +1,67 @@
+﻿@model IEnumerable<EnglishCenter.Models.getCoursesUnconfirm_Result>
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHomeAdmin.cshtml";
+    ViewBag.active = 3;
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Confirm Orders</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>#Order</th>
+                            <th>#User</th>
+                            <th>Name</th>
+                            <th>Gmail</th>
+                            <th>Phone</th>
+                            <th>Day Join</th>
+                            <th>Price</th>
+                            <th>Paid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <td>
+                                        <img class="img_course" style="height:100px; width:100px;object-fit:cover; padding:3px; border: 2px solid #adb5bd;"
+                                             src="@item.us_img">
+                                    </td>
+                                    <td>@item.or_id</td>
+                                    <td>@item.us_id</td>
+                                    <td>@item.us_firstname</td>
+                                    <td>@item.us_gmail</td>
+                                    <td>@item.us_phone</td>
+                                    <td>@string.Format("{0:dd/MM/yyyy}", item.or_dayjoin)</td>
+                                    <td>@item.or_price</td>
+                                    <td style="display:flex; justify-content:center; border:none;">
+                                        <a href="/Admin/Home/ConfirmCourses?or_id=@item.or_id">
+                                            <i style="margin-top:4px; color:#345971;" class="fas fa-user-check fa-lg"></i>
+                                        </a>
+                                    </td>
+                                }
+                            }
+
+
+                        </tr>
+                    </tbody>
+
+
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+<!-- /.row -->

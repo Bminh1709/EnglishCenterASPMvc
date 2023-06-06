@@ -1,0 +1,48 @@
+﻿<style>
+    #adminImg:hover {
+        content: url("/public/images/uploadphoto2.png");
+    }
+</style>
+
+@* PROFILE *@
+<!-- Profile Image -->
+<div class="card card-primary card-outline">
+    <div class="card-body box-profile">
+
+        @{
+            var gmail = Session["admin"].ToString();
+            var img = Session["ad_img"].ToString();
+            var id = Session["ad_id"].ToString();
+            var firstname = Session["ad_firstname"].ToString();
+            var lastname = Session["ad_lastname"].ToString();
+
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle"
+                         src="@img"
+                         alt="User profile picture"
+                         id="adminImg">
+                    <input type="file" id="uploadInput" style="display: none;">
+                </div>
+            <h3 class="profile-username text-center">@lastname @firstname</h3>
+
+            <p class="text-muted text-center">@gmail</p>
+
+            <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                    <b>Id Admin</b> <a class="float-right" id="adminId">@id</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Last Name</b> <a class="float-right" id="adminLastName">@lastname</a>
+                </li>
+                <li class="list-group-item">
+                    <b>First Name</b> <a class="float-right" id="adminFirstName">@firstname</a>
+                </li>
+            </ul>
+            <a href="#" class="btn btn-primary btn-block btn__green" id="editInfoBtn"><b>Edit Info</b></a>
+            <button class="btn btn-primary btn-block btn__green" id="saveChangesBtn" style="display: none; margin-top:0;"><b>Save Changes</b></button>
+
+        }
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3db5594e89cf41ae9836b4f0e2f07880" Name="Diagram1">
+        <EntityTypeShape EntityType="MinhcenterModel.admin" Width="1.5" PointX="2.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MinhcenterModel.course" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MinhcenterModel.order" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MinhcenterModel.user_cart" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MinhcenterModel.user_wait" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MinhcenterModel.user" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="MinhcenterModel.FK_user_cart_courses" ManuallyRouted="false" />
+        <AssociationConnector Association="MinhcenterModel.FK_user_wait_courses" ManuallyRouted="false" />
+        <AssociationConnector Association="MinhcenterModel.FK_orders_users" ManuallyRouted="false" />
+        <AssociationConnector Association="MinhcenterModel.FK_user_wait_orders" ManuallyRouted="false" />
+        <AssociationConnector Association="MinhcenterModel.FK_user_cart_users" ManuallyRouted="false" />
+        <AssociationConnector Association="MinhcenterModel.FK_user_wait_users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

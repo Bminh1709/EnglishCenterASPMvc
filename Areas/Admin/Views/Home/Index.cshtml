@@ -1,0 +1,141 @@
+﻿@model IEnumerable<EnglishCenter.Models.course>
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHomeAdmin.cshtml";
+    ViewBag.active = 1;
+}
+@section scripts{
+    <script type="text/javascript" src="@Url.Content("~/Content/JavaScript/ManageCourses/Site.js")"></script>
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Courses Table</h3>
+
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modelCourses">
+                    Add new course
+                </button>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Teacher</th>
+                            <th style="width:100px;">Start Day</th>
+                            <th style="width:100px;">End Day</th>
+                            <th style="width:200px;">Description</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="trow_@item.co_id">
+                                <td>@item.co_id</td>
+                                <td>@item.co_name</td>
+                                <td>@item.co_teacher</td>
+                                <td>@string.Format("{0:dd/MM/yyyy}", item.co_startday)</td>
+                                <td>@string.Format("{0:dd/MM/yyyy}", item.co_endday)</td>
+                                <td>@item.co_des</td>
+                                <td>@item.co_price</td>
+                                <td>
+                                    <img class="img_course" style="height:150px; width:200px;object-fit:cover;"
+                                         src="@item.co_img">
+                                </td>
+                                <td style="display:flex; justify-content:center; border:none;">
+                                    <a href="~/Admin/Home/Update?idCourse=@item.co_id">
+                                        <i style="margin-top:4px; color:#345971;" class="fas fa-edit"></i>
+                                    </a>
+                                    @*<a href="#" data-id="@item.co_id" class="btnUpdateCourse">
+                                            <i style="margin-top:4px; color:#345971;" class="fas fa-edit"></i>
+                                        </a>*@
+                                </td>
+                                <td>
+                                    @*<a href="~/Admin/Home/Delete?idCourse=@item.co_id" onclick="return deleteConfirm();">
+                                            <i style="margin-left:17px; color:#d63031;" class="fas fa-trash-alt"></i>
+                                        </a>*@
+                                    <a href="#" data-id="@item.co_id" class="btnDeleteCourse">
+                                        <i style="margin-left:17px; color:#d63031;" class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+<!-- /.row -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="modelCourses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 700px">
+        <div class="modal-content">
+            <div class="modal-header" style=" background-color: #4b91f8; color: white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Course</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form enctype="multipart/form-data" id="courseForm" name="frmAddCourse" >
+                <div class="modal-body">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">ID</label>
+                            <input name="co_Id" type="text" class="form-control" id="co_id" placeholder="Enter course ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input name="co_name" type="text" class="form-control" id="co_name" placeholder="Enter course name">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Teacher</label>
+                            <input name="co_teacher" type="text" class="form-control" id="co_teacher" placeholder="Enter teacher who is responsible for this course">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Start Day</label>
+                            <input name="co_startday" type="date" class="form-control" id="co_startday" placeholder="Enter date when course starts">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">End Day</label>
+                            <input name="co_endday" type="date" class="form-control" id="co_endday" placeholder="Enter date when course ends">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Description</label>
+                            <input name="co_des" type="text" class="form-control" id="co_des" placeholder="Describe about this course">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Price</label>
+                            <input name="co_price" type="number" class="form-control" id="co_price" placeholder="How much does the course cost?">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Image</label>
+                            <input type="file" accept="image/*" class="form-control" name="co_img" id="co_img">
+                            <div style="margin-top: 15px; text-align: center" id="preview"></div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="btnSubmitNe">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

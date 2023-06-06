@@ -1,0 +1,59 @@
+﻿@model EnglishCenter.Models.course
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutHomeAdmin.cshtml";
+}
+
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Update course</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form enctype="multipart/form-data" method="post">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="exampleInputEmail1">ID</label>
+                @Html.HiddenFor(model => model.co_id)
+                @*<input name="co_Id" type="text" class="form-control" value="@Model.co_id" readonly>*@
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Name</label>
+                <input name="co_name" type="text" class="form-control" value="@Model.co_name">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Teacher</label>
+                <input name="co_teacher" type="text" class="form-control" value="@Model.co_teacher">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Start Day</label>
+                <input name="co_startday" type="date" class="form-control" value="@Html.Raw((Model.co_startday??DateTime.Now).ToString("yyyy-MM-dd"))">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">End Day</label>
+                <input name="co_endday" type="date" class="form-control" value="@Html.Raw((Model.co_endday??DateTime.Now).ToString("yyyy-MM-dd"))">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Description</label>
+                <input name="co_des" type="text" class="form-control" value="@Model.co_des">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Price</label>
+                <input name="co_price" type="number" class="form-control" value="@Model.co_price">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Image</label>
+                <input type="text" readonly class="form-control" value="@Model.co_img" name="co_img">
+            </div>
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" name="btn-update-course" class="btn btn-primary">Upfate</button>
+        </div>
+    </form>
+</div>
+<!-- /.card -->
+
+

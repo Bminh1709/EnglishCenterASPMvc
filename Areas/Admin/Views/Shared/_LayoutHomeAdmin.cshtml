@@ -1,0 +1,129 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/template/admin/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="/template/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/template/admin/dist/css/adminlte.min.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+
+    <!-- css files -->
+    <link rel="stylesheet" type="text/css" href="/public/css/ad_login.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/publicCSS.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/navigationbar.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/home.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/profile.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/courses.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/popUp.css">
+
+</head>
+<body>
+
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Admin</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/Admin/Access/logout">Log Out</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+
+
+
+                        @Html.Partial("_AdminInfoPartialView")
+
+
+                        @* COURSES *@
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header p-2">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item"><a class="nav-link @Html.Raw(ViewBag.active == 1 ? " active":"")" href="~/Admin/Home" data-toggle="tab">Courses</a></li>
+                                    @*<li class="nav-item"><a class="nav-link @Html.Raw(ViewBag.active == 2 ? " active":"")" href="~/Admin/Home/Add" data-toggle="tab">Add Courses</a></li>*@
+                                    <li class="nav-item"><a class="nav-link @Html.Raw(ViewBag.active == 3 ? " active":"")" href="~/Admin/Home/Orders" data-toggle="tab">Orders</a></li>
+                                </ul>
+                            </div><!-- /.card-header -->
+
+                            <div class="card-body">
+                                <div class="tab-content">
+
+
+                                    @RenderBody()
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+                </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+
+    </div>
+
+
+    <!-- jQuery -->
+    <script src="/template/admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/template/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/template/admin/dist/js/adminlte.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+
+    <script src="~/public/js/jquery.js"></script>
+
+    <script src="/public/js/checkAdminLogin.js"></script>
+    <script src="/public/js/deleteConfirm.js"></script>
+    <script src="/public/js/checkAddCourse.js"></script>
+    <script src="/public/js/checkUserSignup.js"></script>
+    <script src="/public/js/checkCart.js"></script>
+    <script src="/public/js/paymentConfirm.js"></script>
+    <script src="~/Content/JavaScript/ManageAdmin/Site.js"></script>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

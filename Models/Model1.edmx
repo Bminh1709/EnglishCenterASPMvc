@@ -1,0 +1,633 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MinhcenterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad_firstname" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ad_lastname" Type="nvarchar" MaxLength="200" />
+          <Property Name="ad_gmail" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ad_pass" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ad_img" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="courses">
+          <Key>
+            <PropertyRef Name="co_id" />
+          </Key>
+          <Property Name="co_id" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="co_name" Type="nvarchar" MaxLength="200" />
+          <Property Name="co_teacher" Type="nvarchar" MaxLength="200" />
+          <Property Name="co_startday" Type="date" />
+          <Property Name="co_endday" Type="date" />
+          <Property Name="co_des" Type="text" />
+          <Property Name="co_price" Type="int" />
+          <Property Name="co_img" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="or_id" />
+          </Key>
+          <Property Name="or_id" Type="int" Nullable="false" />
+          <Property Name="us_id" Type="int" />
+          <Property Name="or_price" Type="int" />
+          <Property Name="or_dayjoin" Type="date" Nullable="false" />
+          <Property Name="or_state" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="user_cart">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="co_id" Type="nvarchar" MaxLength="10" />
+          <Property Name="us_id" Type="int" />
+        </EntityType>
+        <EntityType Name="user_wait">
+          <Key>
+            <PropertyRef Name="w_id" />
+          </Key>
+          <Property Name="w_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="co_id" Type="nvarchar" MaxLength="10" />
+          <Property Name="us_id" Type="int" />
+          <Property Name="or_id" Type="int" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="us_id" />
+          </Key>
+          <Property Name="us_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="us_firstname" Type="nvarchar" MaxLength="200" />
+          <Property Name="us_lastname" Type="nvarchar" MaxLength="200" />
+          <Property Name="us_gmail" Type="nvarchar" MaxLength="200" />
+          <Property Name="us_pass" Type="nvarchar" MaxLength="200" />
+          <Property Name="us_phone" Type="nvarchar" MaxLength="12" />
+          <Property Name="us_gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="us_img" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK_orders_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_cart_courses">
+          <End Role="courses" Type="Self.courses" Multiplicity="0..1" />
+          <End Role="user_cart" Type="Self.user_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="co_id" />
+            </Principal>
+            <Dependent Role="user_cart">
+              <PropertyRef Name="co_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_cart_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="user_cart" Type="Self.user_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="user_cart">
+              <PropertyRef Name="us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_wait_courses">
+          <End Role="courses" Type="Self.courses" Multiplicity="0..1" />
+          <End Role="user_wait" Type="Self.user_wait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="co_id" />
+            </Principal>
+            <Dependent Role="user_wait">
+              <PropertyRef Name="co_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_wait_orders">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="user_wait" Type="Self.user_wait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="or_id" />
+            </Principal>
+            <Dependent Role="user_wait">
+              <PropertyRef Name="or_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_wait_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="user_wait" Type="Self.user_wait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="user_wait">
+              <PropertyRef Name="us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="addCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="co_id" Type="nvarchar" Mode="In" />
+          <Parameter Name="us_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddToOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="orderID" Type="int" Mode="In" />
+          <Parameter Name="us_id" Type="int" Mode="In" />
+          <Parameter Name="totalPrice" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteCourseInCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="co_id" Type="varchar" Mode="In" />
+          <Parameter Name="us_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getCourseFromCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="us_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getCoursesJoined" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="us_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="getCoursesUnconfirm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="searchCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="filter" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ShowCart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="us_id" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="co_img" Type="nvarchar" MaxLength="200" />
+                <Property Name="co_name" Type="nvarchar" MaxLength="200" />
+                <Property Name="co_price" Type="int" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <EntityContainer Name="MinhcenterModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="courses" EntityType="Self.courses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_cart" EntityType="Self.user_cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_wait" EntityType="Self.user_wait" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_cart_courses" Association="Self.FK_user_cart_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="user_cart" EntitySet="user_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_cart_users" Association="Self.FK_user_cart_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_cart" EntitySet="user_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_wait_courses" Association="Self.FK_user_wait_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="user_wait" EntitySet="user_wait" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_wait_orders" Association="Self.FK_user_wait_orders">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="user_wait" EntitySet="user_wait" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_wait_users" Association="Self.FK_user_wait_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_wait" EntitySet="user_wait" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MinhcenterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <ComplexType Name="ShowCart_Result">
+          <Property Name="co_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="co_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="co_price" Type="Int32" />
+        </ComplexType>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad_firstname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ad_lastname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ad_gmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ad_pass" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ad_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="course">
+          <Key>
+            <PropertyRef Name="co_id" />
+          </Key>
+          <Property Name="co_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="co_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="co_teacher" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="co_startday" Type="DateTime" Precision="0" />
+          <Property Name="co_endday" Type="DateTime" Precision="0" />
+          <Property Name="co_des" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="co_price" Type="Int32" />
+          <Property Name="co_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user_cart" Relationship="Self.FK_user_cart_courses" FromRole="courses" ToRole="user_cart" />
+          <NavigationProperty Name="user_wait" Relationship="Self.FK_user_wait_courses" FromRole="courses" ToRole="user_wait" />
+        </EntityType>
+        <EntityType Name="order">
+          <Key>
+            <PropertyRef Name="or_id" />
+          </Key>
+          <Property Name="or_id" Type="Int32" Nullable="false" />
+          <Property Name="us_id" Type="Int32" />
+          <Property Name="or_price" Type="Int32" />
+          <Property Name="or_dayjoin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="or_state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="Self.FK_orders_users" FromRole="orders" ToRole="users" />
+          <NavigationProperty Name="user_wait" Relationship="Self.FK_user_wait_orders" FromRole="orders" ToRole="user_wait" />
+        </EntityType>
+        <EntityType Name="user_cart">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="co_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="us_id" Type="Int32" />
+          <NavigationProperty Name="cours" Relationship="Self.FK_user_cart_courses" FromRole="user_cart" ToRole="courses" />
+          <NavigationProperty Name="user" Relationship="Self.FK_user_cart_users" FromRole="user_cart" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user_wait">
+          <Key>
+            <PropertyRef Name="w_id" />
+          </Key>
+          <Property Name="w_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="co_id" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="us_id" Type="Int32" />
+          <Property Name="or_id" Type="Int32" />
+          <NavigationProperty Name="cours" Relationship="Self.FK_user_wait_courses" FromRole="user_wait" ToRole="courses" />
+          <NavigationProperty Name="order" Relationship="Self.FK_user_wait_orders" FromRole="user_wait" ToRole="orders" />
+          <NavigationProperty Name="user" Relationship="Self.FK_user_wait_users" FromRole="user_wait" ToRole="users" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="us_id" />
+          </Key>
+          <Property Name="us_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="us_firstname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="us_lastname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="us_gmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="us_pass" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="us_phone" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="us_gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="us_img" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_users" FromRole="users" ToRole="orders" />
+          <NavigationProperty Name="user_cart" Relationship="Self.FK_user_cart_users" FromRole="users" ToRole="user_cart" />
+          <NavigationProperty Name="user_wait" Relationship="Self.FK_user_wait_users" FromRole="users" ToRole="user_wait" />
+        </EntityType>
+        <Association Name="FK_user_cart_courses">
+          <End Role="courses" Type="MinhcenterModel.course" Multiplicity="0..1" />
+          <End Role="user_cart" Type="Self.user_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="co_id" />
+            </Principal>
+            <Dependent Role="user_cart">
+              <PropertyRef Name="co_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_wait_courses">
+          <End Role="courses" Type="MinhcenterModel.course" Multiplicity="0..1" />
+          <End Role="user_wait" Type="Self.user_wait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="courses">
+              <PropertyRef Name="co_id" />
+            </Principal>
+            <Dependent Role="user_wait">
+              <PropertyRef Name="co_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="orders" Type="Self.order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_wait_orders">
+          <End Role="orders" Type="Self.order" Multiplicity="0..1" />
+          <End Role="user_wait" Type="Self.user_wait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="or_id" />
+            </Principal>
+            <Dependent Role="user_wait">
+              <PropertyRef Name="or_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_cart_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="user_cart" Type="Self.user_cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="user_cart">
+              <PropertyRef Name="us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_wait_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="user_wait" Type="Self.user_wait" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="us_id" />
+            </Principal>
+            <Dependent Role="user_wait">
+              <PropertyRef Name="us_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MinhcenterEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admins" EntityType="Self.admin" />
+          <EntitySet Name="courses" EntityType="MinhcenterModel.course" />
+          <EntitySet Name="orders" EntityType="Self.order" />
+          <EntitySet Name="user_cart" EntityType="Self.user_cart" />
+          <EntitySet Name="user_wait" EntityType="Self.user_wait" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <AssociationSet Name="FK_user_cart_courses" Association="Self.FK_user_cart_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="user_cart" EntitySet="user_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_wait_courses" Association="Self.FK_user_wait_courses">
+            <End Role="courses" EntitySet="courses" />
+            <End Role="user_wait" EntitySet="user_wait" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_users" Association="Self.FK_orders_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_wait_orders" Association="Self.FK_user_wait_orders">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="user_wait" EntitySet="user_wait" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_cart_users" Association="Self.FK_user_cart_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_cart" EntitySet="user_cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_wait_users" Association="Self.FK_user_wait_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="user_wait" EntitySet="user_wait" />
+          </AssociationSet>
+          <FunctionImport Name="ShowCart" IsComposable="true" ReturnType="Collection(MinhcenterModel.ShowCart_Result)">
+          <Parameter Name="us_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="addCart">
+            <Parameter Name="co_id" Mode="In" Type="String" />
+            <Parameter Name="us_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddToOrder">
+            <Parameter Name="orderID" Mode="In" Type="Int32" />
+            <Parameter Name="us_id" Mode="In" Type="Int32" />
+            <Parameter Name="totalPrice" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteCourseInCart">
+            <Parameter Name="co_id" Mode="In" Type="String" />
+            <Parameter Name="us_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getCourseFromCart" ReturnType="Collection(MinhcenterModel.getCourseFromCart_Result)">
+          <Parameter Name="us_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getCoursesJoined" ReturnType="Collection(MinhcenterModel.getCoursesJoined_Result)">
+          <Parameter Name="us_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getCoursesUnconfirm" ReturnType="Collection(MinhcenterModel.getCoursesUnconfirm_Result)" />
+          <FunctionImport Name="searchCourse" ReturnType="Collection(MinhcenterModel.searchCourse_Result)">
+          <Parameter Name="filter" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="getCourseFromCart_Result">
+          <Property Type="String" Name="co_Id" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="co_name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="co_teacher" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="co_startday" Nullable="true" />
+          <Property Type="DateTime" Name="co_endday" Nullable="true" />
+          <Property Type="String" Name="co_img" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="co_price" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getCoursesJoined_Result">
+          <Property Type="String" Name="co_Id" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="co_name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="co_teacher" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="co_des" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="co_price" Nullable="true" />
+          <Property Type="String" Name="co_img" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="or_dayjoin" Nullable="false" />
+          <Property Type="String" Name="or_state" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="getCoursesUnconfirm_Result">
+          <Property Type="String" Name="us_img" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="or_id" Nullable="false" />
+          <Property Type="Int32" Name="us_id" Nullable="true" />
+          <Property Type="String" Name="us_firstname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="us_gmail" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="us_phone" Nullable="true" MaxLength="12" />
+          <Property Type="DateTime" Name="or_dayjoin" Nullable="false" />
+          <Property Type="Int32" Name="or_price" Nullable="true" />
+          <Property Type="String" Name="or_state" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="searchCourse_Result">
+          <Property Type="String" Name="co_id" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="co_name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="co_teacher" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="co_startday" Nullable="true" />
+          <Property Type="DateTime" Name="co_endday" Nullable="true" />
+          <Property Type="String" Name="co_des" Nullable="true" MaxLength="Max" />
+          <Property Type="Int32" Name="co_price" Nullable="true" />
+          <Property Type="String" Name="co_img" Nullable="true" MaxLength="200" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MinhcenterModelStoreContainer" CdmEntityContainer="MinhcenterEntities">
+          <EntitySetMapping Name="admins">
+            <EntityTypeMapping TypeName="MinhcenterModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="ad_id" ColumnName="ad_id" />
+                <ScalarProperty Name="ad_firstname" ColumnName="ad_firstname" />
+                <ScalarProperty Name="ad_lastname" ColumnName="ad_lastname" />
+                <ScalarProperty Name="ad_gmail" ColumnName="ad_gmail" />
+                <ScalarProperty Name="ad_pass" ColumnName="ad_pass" />
+                <ScalarProperty Name="ad_img" ColumnName="ad_img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="courses">
+            <EntityTypeMapping TypeName="MinhcenterModel.course">
+              <MappingFragment StoreEntitySet="courses">
+                <ScalarProperty Name="co_id" ColumnName="co_id" />
+                <ScalarProperty Name="co_name" ColumnName="co_name" />
+                <ScalarProperty Name="co_teacher" ColumnName="co_teacher" />
+                <ScalarProperty Name="co_startday" ColumnName="co_startday" />
+                <ScalarProperty Name="co_endday" ColumnName="co_endday" />
+                <ScalarProperty Name="co_des" ColumnName="co_des" />
+                <ScalarProperty Name="co_price" ColumnName="co_price" />
+                <ScalarProperty Name="co_img" ColumnName="co_img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="MinhcenterModel.order">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="or_id" ColumnName="or_id" />
+                <ScalarProperty Name="us_id" ColumnName="us_id" />
+                <ScalarProperty Name="or_price" ColumnName="or_price" />
+                <ScalarProperty Name="or_dayjoin" ColumnName="or_dayjoin" />
+                <ScalarProperty Name="or_state" ColumnName="or_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_cart">
+            <EntityTypeMapping TypeName="MinhcenterModel.user_cart">
+              <MappingFragment StoreEntitySet="user_cart">
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+                <ScalarProperty Name="co_id" ColumnName="co_id" />
+                <ScalarProperty Name="us_id" ColumnName="us_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_wait">
+            <EntityTypeMapping TypeName="MinhcenterModel.user_wait">
+              <MappingFragment StoreEntitySet="user_wait">
+                <ScalarProperty Name="w_id" ColumnName="w_id" />
+                <ScalarProperty Name="co_id" ColumnName="co_id" />
+                <ScalarProperty Name="us_id" ColumnName="us_id" />
+                <ScalarProperty Name="or_id" ColumnName="or_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="MinhcenterModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="us_id" ColumnName="us_id" />
+                <ScalarProperty Name="us_firstname" ColumnName="us_firstname" />
+                <ScalarProperty Name="us_lastname" ColumnName="us_lastname" />
+                <ScalarProperty Name="us_gmail" ColumnName="us_gmail" />
+                <ScalarProperty Name="us_pass" ColumnName="us_pass" />
+                <ScalarProperty Name="us_phone" ColumnName="us_phone" />
+                <ScalarProperty Name="us_gender" ColumnName="us_gender" />
+                <ScalarProperty Name="us_img" ColumnName="us_img" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionName="MinhcenterModel.Store.ShowCart" FunctionImportName="ShowCart">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MinhcenterModel.ShowCart_Result">
+                <ScalarProperty Name="co_img" ColumnName="co_img" />
+                <ScalarProperty Name="co_name" ColumnName="co_name" />
+                <ScalarProperty Name="co_price" ColumnName="co_price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="addCart" FunctionName="MinhcenterModel.Store.addCart" />
+          <FunctionImportMapping FunctionImportName="AddToOrder" FunctionName="MinhcenterModel.Store.AddToOrder" />
+          <FunctionImportMapping FunctionImportName="DeleteCourseInCart" FunctionName="MinhcenterModel.Store.DeleteCourseInCart" />
+          <FunctionImportMapping FunctionImportName="getCourseFromCart" FunctionName="MinhcenterModel.Store.getCourseFromCart">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MinhcenterModel.getCourseFromCart_Result">
+                <ScalarProperty Name="co_Id" ColumnName="co_Id" />
+                <ScalarProperty Name="co_name" ColumnName="co_name" />
+                <ScalarProperty Name="co_teacher" ColumnName="co_teacher" />
+                <ScalarProperty Name="co_startday" ColumnName="co_startday" />
+                <ScalarProperty Name="co_endday" ColumnName="co_endday" />
+                <ScalarProperty Name="co_img" ColumnName="co_img" />
+                <ScalarProperty Name="co_price" ColumnName="co_price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getCoursesJoined" FunctionName="MinhcenterModel.Store.getCoursesJoined">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MinhcenterModel.getCoursesJoined_Result">
+                <ScalarProperty Name="co_Id" ColumnName="co_Id" />
+                <ScalarProperty Name="co_name" ColumnName="co_name" />
+                <ScalarProperty Name="co_teacher" ColumnName="co_teacher" />
+                <ScalarProperty Name="co_des" ColumnName="co_des" />
+                <ScalarProperty Name="co_price" ColumnName="co_price" />
+                <ScalarProperty Name="co_img" ColumnName="co_img" />
+                <ScalarProperty Name="or_dayjoin" ColumnName="or_dayjoin" />
+                <ScalarProperty Name="or_state" ColumnName="or_state" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getCoursesUnconfirm" FunctionName="MinhcenterModel.Store.getCoursesUnconfirm">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MinhcenterModel.getCoursesUnconfirm_Result">
+                <ScalarProperty Name="us_img" ColumnName="us_img" />
+                <ScalarProperty Name="or_id" ColumnName="or_id" />
+                <ScalarProperty Name="us_id" ColumnName="us_id" />
+                <ScalarProperty Name="us_firstname" ColumnName="us_firstname" />
+                <ScalarProperty Name="us_gmail" ColumnName="us_gmail" />
+                <ScalarProperty Name="us_phone" ColumnName="us_phone" />
+                <ScalarProperty Name="or_dayjoin" ColumnName="or_dayjoin" />
+                <ScalarProperty Name="or_price" ColumnName="or_price" />
+                <ScalarProperty Name="or_state" ColumnName="or_state" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="searchCourse" FunctionName="MinhcenterModel.Store.searchCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MinhcenterModel.searchCourse_Result">
+                <ScalarProperty Name="co_id" ColumnName="co_id" />
+                <ScalarProperty Name="co_name" ColumnName="co_name" />
+                <ScalarProperty Name="co_teacher" ColumnName="co_teacher" />
+                <ScalarProperty Name="co_startday" ColumnName="co_startday" />
+                <ScalarProperty Name="co_endday" ColumnName="co_endday" />
+                <ScalarProperty Name="co_des" ColumnName="co_des" />
+                <ScalarProperty Name="co_price" ColumnName="co_price" />
+                <ScalarProperty Name="co_img" ColumnName="co_img" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
